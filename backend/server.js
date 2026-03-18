@@ -13,6 +13,7 @@ app.use(cors());
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/products', require('./routes/products'));
 app.use('/api/orders', require('./routes/orders'));
+app.use('/api/email', require('./routes/email'));
 
 // Global error handler
 app.use((err, req, res, next) => {
