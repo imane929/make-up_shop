@@ -16,13 +16,10 @@ const ProductSchema = new mongoose.Schema({
     reviewCount: { type: Number, default: 0 },
     isFeatured: { type: Boolean, default: false },
     isTrending: { type: Boolean, default: false },
+    colors: { type: [String], default: [] },
+    sizes: { type: [String], default: [] },
     createdAt: { type: Date, default: Date.now }
 });
-
-// Add index for better query performance
-ProductSchema.index({ category: 1 });
-ProductSchema.index({ price: 1 });
-ProductSchema.index({ name: 'text', description: 'text' });
 
 module.exports = mongoose.model('Product', ProductSchema);
 

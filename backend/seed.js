@@ -1,215 +1,80 @@
 const mongoose = require("mongoose");
 const Product = require("./models/Product");
 const User = require("./models/User");
+require("dotenv").config();
 
 const products = [
-  {
-    name: "Velvet Matte Lipstick - Ruby Rose",
-    brand: "Sephora Collection",
-    price: 24,
-    category: "lipstick",
-    image: "https://images.unsplash.com/photo-1586495777744-4413f21062fa?w=600&q=80",
-    stock: 50,
-    description: "Long-lasting matte lipstick with vibrant colors and creamy texture",
-    rating: 4.5,
-    reviewCount: 120,
-    isFeatured: true
-  },
-  {
-    name: "Pro Glow Foundation - Sand",
-    brand: "Charlotte Tilbury",
-    price: 58,
-    category: "foundation",
-    image: "https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=600&q=80",
-    stock: 30,
-    description: "Medium coverage foundation with radiant finish for flawless skin",
-    rating: 4.8,
-    reviewCount: 200,
-    isFeatured: true
-  },
-  {
-    name: "Naked Palette - Desert Sunset",
-    brand: "Urban Decay",
-    price: 54,
-    category: "eyeshadow",
-    image: "https://images.unsplash.com/photo-1512496015851-a90fb38ba796?w=600&q=80",
-    stock: 25,
-    description: "12-color eyeshadow palette with shimmery and matte shades",
-    rating: 4.7,
-    reviewCount: 85,
-    isTrending: true
-  },
-  {
-    name: "Moisturizing Face Cream",
-    brand: "La Mer",
-    price: 85,
-    category: "skincare",
-    image: "https://images.unsplash.com/photo-1570194065650-d99fb4b38b15?w=600&q=80",
-    stock: 100,
-    description: "Luxurious moisturizing cream with Miracle Broth formula",
-    rating: 4.9,
-    reviewCount: 350,
-    isFeatured: true
-  },
-  {
-    name: "Lash Sensational Mascara",
-    brand: "Maybelline",
-    price: 12,
-    category: "mascara",
-    image: "https://images.unsplash.com/photo-1631214524020-7e18db9a8f92?w=600&q=80",
-    stock: 80,
-    description: "Volumizing mascara for dramatic, fanned-out lashes",
-    rating: 4.4,
-    reviewCount: 180
-  },
-  {
-    name: "Orgasm Blush - Peachy Pink",
-    brand: "NARS",
-    price: 42,
-    category: "blush",
-    image: "https://www.amazon.com/NARS-Orgasm-Peachy-Golden-Shimmer/dp/B0BPD9HC2P",
-    stock: 40,
-    description: "Iconic silky powder blush for natural flush and glow",
-    rating: 4.6,
-    reviewCount: 95
-  },
-  {
-    name: "Diamond Bomb Highlighter",
-    brand: "Fenty Beauty",
-    price: 36,
-    category: "highlighter",
-    image: "https://images.unsplash.com/photo-1560891958-68bb1b0e49f6?w=600&q=80",
-    stock: 35,
-    description: "High-impact highlighter with diamond-like shimmer",
-    rating: 4.8,
-    reviewCount: 220,
-    isTrending: true
-  },
-  {
-    name: "Vitamin C Serum",
-    brand: "The Ordinary",
-    price: 15,
-    category: "skincare",
-    image: "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=600&q=80",
-    stock: 60,
-    description: "Antioxidant vitamin C serum for bright and even skin tone",
-    rating: 4.7,
-    reviewCount: 400
-  },
-  {
-    name: "Hydrating Lip Oil - Cherry",
-    brand: "Dior",
-    price: 38,
-    category: "lipstick",
-    image: "https://images.unsplash.com/photo-1585386959984-a41552231658?w=600&q=80",
-    stock: 45,
-    description: "Glossy lip oil with intense hydration and subtle color",
-    rating: 4.9,
-    reviewCount: 180,
-    isFeatured: true
-  },
-  {
-    name: "Setting Spray - Ultra Fine",
-    brand: "Make Up For Ever",
-    price: 32,
-    category: "makeup",
-    image: "https://images.unsplash.com/photo-1631214540553-ab2016c02404?w=600&q=80",
-    stock: 70,
-    description: "Micro-fine mist for all-day makeup locking",
-    rating: 4.5,
-    reviewCount: 150
-  },
-  {
-    name: "Double Wear Foundation",
-    brand: "Estée Lauder",
-    price: 44,
-    category: "foundation",
-    image: "https://images.unsplash.com/photo-1616683693504-3ea7e9ad6fec?w=600&q=80",
-    stock: 25,
-    description: "24-hour wear foundation with breathable coverage",
-    rating: 4.7,
-    reviewCount: 300
-  },
-  {
-    name: "Hyaluronic Acid Serum",
-    brand: "CeraVe",
-    price: 22,
-    category: "skincare",
-    image: "https://images.unsplash.com/photo-1608248597279-f99d160bfbc8?w=600&q=80",
-    stock: 90,
-    description: "Hydrating serum with 3 essential ceramides",
-    rating: 4.8,
-    reviewCount: 450,
-    isTrending: true
-  },
-  {
-    name: "Better Than Sex Mascara",
-    brand: "Too Faced",
-    price: 26,
-    category: "mascara",
-    image: "https://images.unsplash.com/photo-1583001931096-959e9a1a6223?w=600&q=80",
-    stock: 55,
-    description: "Volumizing mascara with hourglass-shaped brush",
-    rating: 4.3,
-    reviewCount: 220
-  },
-  {
-    name: "Glow Recipe Serum",
-    brand: "Glow Recipe",
-    price: 45,
-    category: "skincare",
-    image: "https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?w=600&q=80",
-    stock: 40,
-    description: "Vitamin C serum with watermelon for radiant skin",
-    rating: 4.6,
-    reviewCount: 280
-  },
-  {
-    name: "Contour Kit - Matte",
-    brand: "Anastasia Beverly Hills",
-    price: 48,
-    category: "makeup",
-    image: "https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=600&q=80",
-    stock: 35,
-    description: "Pro contour palette with 6 shades for sculpted face",
-    rating: 4.5,
-    reviewCount: 190,
-    isTrending: true
-  },
-  {
-    name: "Lip Gloss - Clear",
-    brand: "Glossier",
-    price: 16,
-    category: "lipstick",
-    image: "https://images.unsplash.com/photo-1570130937306-5b1c4d53c4c0?w=600&q=80",
-    stock: 80,
-    description: "Cloud-like lip gloss for effortless shine",
-    rating: 4.4,
-    reviewCount: 310
-  }
+  { name: "Velvet Matte Lipstick", brand: "Sephora", price: 15, category: "lipstick", image: "https://www.temptalia.com/wp-content/uploads/2023/07/sephora_matte-velvet-lipstick_004_product.jpg", stock: 50, description: "Velvet matte lipstick with long-lasting wear", rating: 4.8, reviewCount: 234, isFeatured: true, colors: ["Bright Pink", "Soft Rose Pink", "Deep Burgundy", "Muted Berry", "Warm Brick Red"] },
+  { name: "Pro Glow Foundation", brand: "Charlotte Tilbury", price: 58, category: "foundation", image: "https://cdn-cjhgk.nitrocdn.com/CXxGixRVyChwAxySbAyltuCiQXRKaWDN/assets/images/optimized/rev-9dad235/www.newbeauty.com/wp-content/uploads/2024/06/charlotte-tilbury-foundation-stick-2.jpg", stock: 35, description: "Glowy foundation with medium coverage and hydration", rating: 4.7, reviewCount: 189, colors: ["Fair", "Medium", "Tan", "Deep"] },
+  { name: "Hydrating Face Cream", brand: "La Mer", price: 85, category: "skincare", image: "https://www.sephora.com/productimages/product/p416341-av-19-zoom.jpg?imwidth=3000", stock: 28, description: "Luxurious hydrating cream for deep moisture and skin repair", rating: 4.9, reviewCount: 312, sizes: ["15ml", "30ml", "60ml"] },
+  { name: "Naked Palette", brand: "Urban Decay", price: 54, category: "eyeshadow", image: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi0kwdJYKMKNF_TLmsiGtIL8djgY0_M9UjM60Ds9RJSRZ2P3vESaw71lMuInv1Vd44ROW6fTLBAEEjxPalhcJPA0Jb1qfgL1CPmrRafaBVERRfczwXzdjYarmNtbz5KkAZ9JHWg4BPYknpQ/s1600/IMG_09512.jpg", stock: 42, description: "12-shade eyeshadow palette with warm desert tones", rating: 4.6, reviewCount: 156, isTrending: true, colors: ["Naked", "Naked 2", "Naked 3", "Smoky"] },
+  { name: "Lash Sensational Mascara", brand: "Maybelline", price: 12, category: "mascara", image: "https://i.ebayimg.com/images/g/-U8AAOSwIexn1xW-/s-l1600.webp", stock: 100, description: "Volumizing mascara for fanned-out, dramatic lashes", rating: 4.5, reviewCount: 445, colors: ["Waterproof Black", "Luscious Black", "Burgundy Brown", "Very Black"] },
+  { name: "Orgasm Blush", brand: "NARS", price: 42, category: "blush", image: "https://down-vn.img.susercontent.com/file/vn-11134207-7qukw-lg2eju5a2nhm6c", stock: 38, description: "Iconic peachy pink blush for natural flush and glow", rating: 4.8, reviewCount: 267, colors: ["Swinger", "Orgasm", "Orgasm X", "Orgasm Rush"] },
+  { name: "Diamond Bomb Highlighter", brand: "Fenty Beauty", price: 36, category: "highlighter", image: "https://www.edgars.co.za/cdn/shop/files/DiamondBomb4.jpg?v=1762327007&width=1800", stock: 45, description: "Prismatic highlighter for explosive glow effect", rating: 4.7, reviewCount: 198, colors: ["Pink Ice", "Lavender Luv'r", "Trophy Wife"] },
+  { name: "Vitamin C Serum", brand: "The Ordinary", price: 15, category: "skincare", image: "https://www.cultbeauty.com/images?url=https://static.thcdn.com/productimg/original/12243648-9575317605891885.jpg&format=webp&auto=avif&width=1200&height=1200&fit=cover", stock: 80, description: "Brightening serum with vitamin C to fade dark spots", rating: 4.6, reviewCount: 523, sizes: ["30ml", "60ml"] },
+  { name: "Hydrating Lip Oil", brand: "Dior", price: 38, category: "lipstick", image: "https://imgmediagumlet.lbb.in/media/2025/09/68c13576d755eb1ec0502d1e_1757492598545.jpg", stock: 32, description: "Shiney lip oil with intense hydration and subtle color", rating: 4.9, reviewCount: 145, colors: ["Pink", "Coral", "Rasberry", "Berry"] },
+  { name: "Ultra Fine Setting Spray", brand: "Make Up For Ever", price: 32, category: "makeup", image: "https://www.adorebeauty.co.nz/pim_media/000/433/166/MAKE_UP_FOR_EVER_Mist___Fix_Matte_both_sizes.png", stock: 55, description: "Fine mist setting spray for all-day makeup hold", rating: 4.5, reviewCount: 234, sizes: ["30ml", "100ml"] },
+  { name: "Hyaluronic Acid Serum", brand: "CeraVe", price: 22, category: "skincare", image: "https://www.cerave.co.uk/-/media/project/loreal/brand-sites/cerave/emea/uk/products/ha-serum/ha-serum-front-lg.jpg?rev=-1?w=500&hash=0735B4BC1C080328DC5EE2473E9B8EF7", stock: 75, description: "Hydrating serum with 3 essential ceramides", rating: 4.7, reviewCount: 412 },
+  { name: "Glow Recipe Serum", brand: "Glow Recipe", price: 45, category: "skincare", image: "https://www.cultbeauty.com/images?url=https://static.thcdn.com/productimg/original/15448252-7385174523375984.jpg&format=webp&auto=avif&width=700&height=700&fit=cover&dpr=2", stock: 40, description: "Vitamin C serum with watermelon for radiant skin", rating: 4.8, reviewCount: 289, colors: ["Cloudberry Bright", "Plum Plump", "Strawberry Smooth", "Watermelon Glow"] },
+  { name: "Better Than Sex Mascara", brand: "Too Faced", price: 26, category: "mascara", image: "https://secretsglow.ma/wp-content/uploads/2024/12/IMG_3919.png", stock: 60, description: "Volumizing mascara with hourglass-shaped brush", rating: 4.6, reviewCount: 378 },
+  { name: "Contour Kit - Matte", brand: "Anastasia Beverly Hills", price: 48, category: "makeup", image: "https://m.media-amazon.com/images/I/51fcS9NXi2L._AC_UF1000,1000_QL80_.jpg", stock: 28, description: "Pro contour palette with 6 shades for sculpted face", rating: 4.7, reviewCount: 198, colors: ["Sand", "Vanilla", "Banana", "Java", "Fawn", "Havana"] },
+  { name: "Cloud Paint Lip Gloss", brand: "Glossier", price: 16, category: "lipstick", image: "https://sidewalkhustle.com/wp-content/uploads/2017/11/glossier-cloud-paint-quad-1.jpg", stock: 90, description: "Cloud-like lip gloss for effortless shine", rating: 4.5, reviewCount: 312, colors: ["Bean", "Puff", "Haze", "Dusk"] },
+  { name: "Silk Pillowcase", brand: "Slip", price: 35, category: "other", image: "https://media.self.com/photos/668ebbace307072919298676/4:3/w_4000,h_3000,c_limit/Best%20Silk%20Pillowcases%20062024%20Lede.jpg", stock: 50, description: "Luxury silk pillowcase for hair and skin", rating: 4.8, reviewCount: 167 },
+  { name: "Luxury Palette - Bijoux Brilliance", brand: "Pat McGrath", price: 64, category: "eyeshadow", image: "https://www.temptalia.com/wp-content/uploads/2023/09/holiday-2023_pat-mcgrath_001_promo.jpg", stock: 25, description: "High-end eyeshadow palette with jewel tones", rating: 4.9, reviewCount: 123 },
+  { name: "Double Wear Foundation - Beige", brand: "Estée Lauder", price: 52, category: "foundation", image: "https://www.esteelauder.com/media/export/cms/products/640x640/el_prod_141225_640x640_5.jpg", stock: 40, description: "24-hour wear foundation with breathable coverage", rating: 4.7, reviewCount: 234 },
+  { name: "Rose Gold Palette", brand: "Huda Beauty", price: 58, category: "eyeshadow", image: "https://5.imimg.com/data5/SELLER/Default/2023/12/372962494/YP/DF/FF/28051373/huda-beauty-rose-gold-palette.jpg", stock: 35, description: "Rose gold eyeshadow palette with 9 shades", rating: 4.8, reviewCount: 189, isTrending: true },
+  { name: "Retinol Night Cream", brand: "Paula's Choice", price: 68, category: "skincare", image: "https://hrd-live.cdn.scayle.cloud/images/23c903498219fed497765b2b92d5d032.jpg?quality=75", stock: 45, description: "Anti-aging night cream with retinol", rating: 4.6, reviewCount: 267 },
+  { name: "Waterproof Eyeliner - Black", brand: "Stila", price: 18, category: "mascara", image: "https://www.stilacosmetics.com/cdn/shop/files/BEST-OF-BEAUTY--ALLURE-2021.jpg?v=1705600717", stock: 70, description: "Waterproof eyeliner for all-day wear", rating: 4.7, reviewCount: 345 },
+  { name: "Glow Bronzer - Sunkissed", brand: "Ucanbe", price: 34, category: "makeup", image: "https://m.media-amazon.com/images/I/71yLXpvrDSL._SL1500_.jpg", stock: 55, description: "Sun-kissed glow bronzer for natural look", rating: 4.5, reviewCount: 198, colors: ["Bronzer", "Light Bronzer", "Sunkissed Bronzer"] },
+  { name: "Glossy Lip Kits Collection", brand: "Kylie Cosmetics", price: 28, category: "lipstick", image: "https://contenthub-delivery.mecca.com/api/public/content/I-073535-3-I-073533-A3-KylieCosmetics-GlossyLipKit-GVLBPz3ATz2RLLPd10mtNg.webp?t=w960", stock: 65, description: "Glossy lip kit collection for perfect lips", rating: 4.6, reviewCount: 156 },
+  { name: "Acne Control Kit", brand: "Mario Badescu", price: 32, category: "skincare", image: "https://www.mariobadescu.com/cdn/shop/files/shlcbueohwbwgl3gw3g4_eca81f08-744c-4db8-bb35-33e723a61121.jpg?v=1702450332&width=990", stock: 50, description: "Complete acne control kit for clear skin", rating: 4.4, reviewCount: 289 },
+  { name: "Volumizing Mascara - Noir Balm", brand: "L'Oréal", price: 24, category: "mascara", image: "https://target.scene7.com/is/image/Target/GUEST_d6dcb955-c4e2-4dbf-b9c7-8800b3cf0958?wid=1200&hei=1200&qlt=80", stock: 85, description: "Volumizing mascara with nourishing balm", rating: 4.5, reviewCount: 456 },
+  { name: "Setting Powder - Translucent", brand: "Charlotte Tilbury", price: 38, category: "makeup", image: "https://zwine.ma/cdn/shop/products/AFF-Finish_1.jpg?v=1673549401&width=500", stock: 40, description: "Translucent setting powder for flawless finish", rating: 4.8, reviewCount: 178, colors: ["Light", "Medium", "Tan", "Deep"] },
+  { name: "Niacinamide Serum 20%", brand: "Paula's Choice", price: 25, category: "skincare", image: "https://www.paulaschoice.com.au/dw/image/v2/BBNX_PRD/on/demandware.static/-/Sites-pc-catalog/default/dwdc07a976/images/products/DTC-8030-5TAU-Key-Ingredients.png?sw=1000&sfrm=png", stock: 60, description: "Pore-minimizing serum with niacinamide", rating: 4.7, reviewCount: 367 },
+  { name: "Matte Lip Kit - Nude", brand: "Kylie Cosmetics", price: 44, category: "lipstick", image: "https://akns-images.eonline.com/eol_images/Entire_Site/2022816/rs_1027x759-220916140329-1024-ecomm-Kylie-Cosmetics-Lip-Kits.ct.jpg?fit=around%7C1027:759&output-quality=90&crop=1027:759;center,top", stock: 38, description: "Matte lip kit with nude shades", rating: 4.6, reviewCount: 212 },
+  { name: "Pro Brush Set", brand: "Morphe", price: 89, category: "other", image: "https://www.efsbeauty.com/cdn/shop/files/Morphe_RoseGold_TravelSet_PDP_1400x_2x_d6763267-7aab-441e-8199-8f603ac774c2.webp?v=1704911996&width=1946", stock: 30, description: "Professional brush set for flawless makeup", rating: 4.7, reviewCount: 145, isFeatured: true },
+  { name: "Eye Cream - Anti Aging", brand: "Olay", price: 55, category: "skincare", image: "https://images.ctfassets.net/su0jtqat2bh5/5xKSiJKcInUx7NFMTAHuK8/412e5ae69b12e2cb4574c68a114b3e45/00075609010781_C1R1_M_NA__1_.png", stock: 45, description: "Anti-aging eye cream for youthful eyes", rating: 4.5, reviewCount: 234 },
+  { name: "Brow Gel - Clear", brand: "Glossier", price: 16, category: "mascara", image: "https://glossier-prod.imgix.net/files/glossier-boybrow-brown-09.png?auto=compress,format&cs=srgb&w=1374", stock: 75, description: "Clear brow gel for natural hold", rating: 4.6, reviewCount: 289 },
+  { name: "Priming Moisturizer", brand: "Smashbox", price: 42, category: "skincare", image: "https://b1998182.smushcdn.com/1998182/wp-content/uploads/2022/03/Smashbox-Photo-Finish-Primerizer-Primer-7.jpg?lossy=2&strip=1&webp=1", stock: 55, description: "Primer and moisturizer in one", rating: 4.7, reviewCount: 198 },
+  { name: "Lip Balm Set - Gift Box", brand: "Fresh", price: 22, category: "lipstick", image: "https://m.media-amazon.com/images/I/61iqt7rdNBL._AC_SL1000_.jpg", stock: 40, description: "Luxury lip balm gift set", rating: 4.8, reviewCount: 167 },
+  { name: "Concealer - Full Coverage", brand: "Tarte", price: 28, category: "makeup", image: "https://www.sephora.com/productimages/sku/s2252179-main-zoom.jpg?imwidth=1224", stock: 65, description: "Full coverage concealer for perfect skin", rating: 4.6, reviewCount: 312 },
+  { name: "Face Oil - Rose", brand: "Drunk Elephant", price: 38, category: "skincare", image: "https://static.thcdn.com/productimg/original/13317064-1715177668240749.jpg", stock: 35, description: "Rose face oil for radiant glow", rating: 4.7, reviewCount: 145 },
+  { name: "Dramatic Lashes Mascara", brand: "Lancôme", price: 20, category: "mascara", image: "https://m.media-amazon.com/images/I/715veZsKWHL._AC_UF1000,1000_QL80_.jpg", stock: 50, description: "Dramatic lashes mascara for bold eyes", rating: 4.8, reviewCount: 234 },
+  { name: "The Coffee Shop Palette", brand: "Juvia's Place", price: 52, category: "eyeshadow", image: "https://www.juviasplace.com/cdn/shop/products/IMG_6160_1080x.jpg?v=1689050740", stock: 28, description: "Eyeshadow palette with warm coffee tones", rating: 4.9, reviewCount: 178, isTrending: true },
+  { name: "Tinted Moisturizer", brand: "NARS", price: 46, category: "foundation", image: "https://m.media-amazon.com/images/I/71s2RWQrufL._SL1500_.jpg", stock: 45, description: "Lightweight tinted moisturizer for natural look", rating: 4.6, reviewCount: 256 },
+  { name: "Sleeping Mask", brand: "Laneige", price: 28, category: "skincare", image: "https://m.media-amazon.com/images/I/71GH5Doz3HL._SL1500_.jpg", stock: 50, description: "Overnight sleeping mask for hydrated skin", rating: 4.7, reviewCount: 189 },
+  { name: "Bath Bomb Set", brand: "Lush", price: 32, category: "skincare", image: "https://www.lush.com/cdn-cgi/image/width=1920,f=auto/https://unicorn.lush.com/media/thumbnails/products/relax_gift_portrait_hero_2024_38fcc11a_thumbnail_4096.jpg", stock: 40, description: "Relaxing bath bomb gift set", rating: 4.8, reviewCount: 145 },
+  { name: "Brush Cleaning Mat", brand: "Sigma", price: 15, category: "other", image: "https://m.media-amazon.com/images/I/81P87NyBiIL.jpg", stock: 80, description: "Effective brush cleaning mat", rating: 4.5, reviewCount: 234 },
+  { name: "Makeup Remover Balm", brand: "Banila Co", price: 24, category: "skincare", image: "https://morgenfreude.com/cdn/shop/files/Sdbf6a2df494c4da2bc2ffb79737614a8N.webp?v=1712647216&width=1445", stock: 55, description: "Gentle makeup remover balm", rating: 4.8, reviewCount: 312 },
+  { name: "Eyelash Curler", brand: "Shu Uemura", price: 22, category: "mascara", image: "https://www.novela.com.sg/asset/ZVkwRjFpRHJzbEhSNEFPRWxCaVZsQjVJT1praDBKR0oySklVSGt0Y1VjWHhadUNsWUhOaWVhWUxPVDNiaFZmdnhXZzRyYjRZSGdUUURZWWFwT24vWjJJZ1RIekZFcTM1R1kxQjNPWGpTZDFGOTJETTNPY0dyREhNaHVVWC9JNGU", stock: 45, description: "Professional eyelash curler for perfect curl", rating: 4.7, reviewCount: 167 },
+  { name: "Color Corrector Palette", brand: "NYX", price: 30, category: "makeup", image: "https://cdn.idealo.com/folder/Product/5328/9/5328965/s4_produktbild_max_15/nyx-color-correcting-palette.jpg", stock: 60, description: "Color correcting palette for flawless skin", rating: 4.6, reviewCount: 223 },
+  { name: "Hair Serum - Argan", brand: "Moroccanoil", price: 26, category: "skincare", image: "https://fr.moroccanoil.com/cdn/shop/products/d1875_digital_brand_mot_ppage_content_resizes_d1752_4_1.jpg?v=1767622870&width=1946", stock: 50, description: "Argan hair serum for silky smooth hair", rating: 4.7, reviewCount: 198 },
+  { name: "Body Lotion Set - Beija Flor", brand: "Sol de Janeiro", price: 36, category: "skincare", image: "https://chikshop.ma/wp-content/uploads/2024/06/SOL-DE-JANEIRO-Beija-Flor-Jet-Set-Coffret-Soin-Corps-1.webp", stock: 35, description: "Brazilian body lotion gift set", rating: 4.8, reviewCount: 145 },
+  { name: "Mirror - Lighted", brand: "Simplehuman", price: 45, category: "other", image: "https://m.media-amazon.com/images/I/81G2LeSv-9L._AC_UF894,1000_QL80_.jpg", stock: 25, description: "Lighted vanity mirror for perfect makeup", rating: 4.9, reviewCount: 89 },
+  { name: "Self Tan Contour Kit", brand: "Bondi Sands", price: 40, category: "skincare", image: "https://static.thcdn.com/productimg/original/14979343-1665172482762556.jpg", stock: 40, description: "Self tanning and contour kit", rating: 4.5, reviewCount: 167 },
+  { name: "Compact Powder", brand: "Shiseido", price: 32, category: "makeup", image: "https://www.bigw.com.au/medias/sys_master/images/images/h0f/hff/101994346741790.jpg", stock: 50, description: "Fine compact powder for smooth finish", rating: 4.6, reviewCount: 189 },
+  { name: "Body Scrub - Coffee", brand: "Frank Body", price: 28, category: "skincare", image: "https://i5.walmartimages.com/asr/37a303c7-d491-462b-985f-4962894f6bf4.7e719bc76a6e9b4c7ee9409d7a420829.jpeg?odnHeight=768&odnWidth=768&odnBg=FFFFFF", stock: 55, description: "Coffee body scrub for smooth skin", rating: 4.7, reviewCount: 234 }
 ];
 
 const seedDB = async () => {
   try {
-    await mongoose.connect("mongodb://localhost:27017/makeupshop");
+    await mongoose.connect(process.env.MONGO_URI);
+    
     await Product.deleteMany({});
     await Product.insertMany(products);
     
-    // Create admin user if not exists
     const adminExists = await User.findOne({ email: "admin@makeupshop.com" });
     if (!adminExists) {
-      const bcrypt = require("bcryptjs");
-      const hashedPassword = await bcrypt.hash("admin123", 10);
       await User.create({
         name: "Admin",
         email: "admin@makeupshop.com",
-        password: hashedPassword,
+        password: "admin123",
         isAdmin: true
       });
       console.log("Admin user created: admin@makeupshop.com / admin123");
     }
     
-    console.log("Database seeded successfully!");
+    console.log(`Database seeded with ${products.length} products!`);
     process.exit();
   } catch (err) {
     console.error(err);
@@ -218,4 +83,3 @@ const seedDB = async () => {
 };
 
 seedDB();
-
