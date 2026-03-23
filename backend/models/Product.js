@@ -16,7 +16,20 @@ const ProductSchema = new mongoose.Schema({
     reviewCount: { type: Number, default: 0 },
     isFeatured: { type: Boolean, default: false },
     isTrending: { type: Boolean, default: false },
-    colors: { type: [String], default: [] },
+    colors: { 
+        type: [{
+            name: { type: String, required: true },
+            hex: { type: String, required: true }
+        }], 
+        default: [] 
+    },
+    shadeVariants: {
+        type: [{
+            name: { type: String, required: true },
+            shades: { type: [String], default: [] }
+        }],
+        default: []
+    },
     sizes: { type: [String], default: [] },
     createdAt: { type: Date, default: Date.now }
 });
