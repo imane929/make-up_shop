@@ -3,9 +3,9 @@ const Order = require("../models/Order");
 const auth = require("../middleware/auth");
 
 // get orders
-router.get("/",auth, async(req,res)=>{
+router.get("/", async(req,res)=>{
     try{
-        const orders = await Order.find({user:req.user.id});
+        const orders = await Order.find().sort({ createdAt: -1 });
         res.json(orders);
 
     }catch(err){
@@ -14,17 +14,21 @@ router.get("/",auth, async(req,res)=>{
 });
 
 // create order
-router.post("/",auth, async(req,res)=>{
+router.post("/", async(req,res)=>{
     try{
+        console.log("Creating order:", req.body);
         const order = new Order({
-            user:req.user.id,
+            user: req.body.userId || null,
             products:req.body.products,
             total:req.body.total,
-            address:req.body.address
+            address:req.body.address,
+            status: "pending"
         });
         await order.save();
+        console.log("Order saved:", order);
         res.json(order);
     }catch(err){
+        console.error("Order error:", err);
         res.status(500).json({ message: "Server error", error: err.message });
     }
 });
@@ -46,5 +50,15 @@ req.params.id,
 res.json(order)
 
 })
+
+// DELETE /api/orders/:id
+router.delete("/:id", async(req,res)=>{
+    try{
+        await Order.findByIdAndDelete(req.params.id);
+        res.json({ message: "Order deleted successfully" });
+    }catch(err){
+        res.status(500).json({ message: "Server error", error: err.message });
+    }
+});
 
 module.exports = router;
