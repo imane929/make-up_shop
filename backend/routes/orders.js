@@ -5,10 +5,17 @@ const auth = require("../middleware/auth");
 // get orders
 router.get("/", async(req,res)=>{
     try{
-        const orders = await Order.find().sort({ createdAt: -1 });
+        const userId = req.headers.userid;
+        let orders;
+        if (userId) {
+            orders = await Order.find({ user: userId }).sort({ createdAt: -1 });
+        } else {
+            orders = await Order.find().sort({ createdAt: -1 });
+        }
         res.json(orders);
 
     }catch(err){
+        console.error("Error fetching orders:", err);
         res.status(500).json({ message: "Server error", error: err.message });
     }
 });
@@ -17,8 +24,9 @@ router.get("/", async(req,res)=>{
 router.post("/", async(req,res)=>{
     try{
         console.log("Creating order:", req.body);
+        const userId = req.headers.userid || req.body.userId;
         const order = new Order({
-            user: req.body.userId || null,
+            user: userId || null,
             products:req.body.products,
             total:req.body.total,
             address:req.body.address,

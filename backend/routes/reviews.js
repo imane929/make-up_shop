@@ -2,7 +2,6 @@ const router = require("express").Router();
 const Review = require("../models/Review");
 const Product = require("../models/Product");
 
-// Get reviews for a product
 router.get("/product/:productId", async (req, res) => {
     try {
         const reviews = await Review.find({ product: req.params.productId })
@@ -14,7 +13,6 @@ router.get("/product/:productId", async (req, res) => {
     }
 });
 
-// Add a review
 router.post("/", async (req, res) => {
     try {
         const { userId, productId, rating, comment } = req.body;
@@ -46,7 +44,6 @@ router.post("/", async (req, res) => {
     }
 });
 
-// Delete a review
 router.delete("/:id", async (req, res) => {
     try {
         const review = await Review.findById(req.params.id);
