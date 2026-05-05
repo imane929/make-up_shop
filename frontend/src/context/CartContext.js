@@ -7,8 +7,15 @@ export const CartProvider = ({ children }) => {
   const [userId, setUserId] = useState(null);
 
   const loadCart = () => {
-    const storedUserId = localStorage.getItem("userId");
     const storedUser = localStorage.getItem("user");
+    const isLoggedIn = storedUser && JSON.parse(storedUser);
+    
+    if (!isLoggedIn) {
+      setUserId(null);
+      return;
+    }
+    
+    const storedUserId = localStorage.getItem("userId");
     const newUserId = storedUserId || (storedUser ? JSON.parse(storedUser)?._id || JSON.parse(storedUser)?.id : null);
     setUserId(newUserId);
   };
